@@ -26,7 +26,7 @@
 
 ## Description
 
-Source code for the article [Authentication and Sessions for MVC Apps with NestJS]()
+Source code for the article [Authentication and Sessions for MVC Apps with NestJS](https://dev.to/nestjs/authentication-and-sessions-for-mvc-apps-with-nestjs-55a4)
 
 ## Installation
 
