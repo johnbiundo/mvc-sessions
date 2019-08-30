@@ -1,4 +1,3 @@
-// src/common/guards/authenticated.guard.ts
 import { ExecutionContext, Injectable, CanActivate } from '@nestjs/common';
 
 @Injectable()

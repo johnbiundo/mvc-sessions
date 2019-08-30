@@ -1,34 +1,35 @@
-// src/users/users.service.ts
 import { Injectable } from '@nestjs/common';
+import { UsersEntity } from './users.entity';
+import { UserRole } from './interfaces/user.interface';
 
 @Injectable()
 export class UsersService {
-  private readonly users: any[];
+  private readonly users: UsersEntity[];
 
   constructor() {
     this.users = [
-      {
-        userId: 1,
+      new UsersEntity({
+        id: 1,
         username: 'john',
         password: 'changeme',
-        pet: { name: 'alfred', picId: 1 },
-      },
-      {
-        userId: 2,
+        roles: [UserRole.Admin],
+      }),
+      new UsersEntity({
+        id: 2,
         username: 'chris',
         password: 'secret',
-        pet: { name: 'gopher', picId: 2 },
-      },
-      {
-        userId: 3,
+        roles: [UserRole.User],
+      }),
+      new UsersEntity({
+        id: 3,
         username: 'maria',
         password: 'guess',
-        pet: { name: 'jenny', picId: 3 },
-      },
+        roles: [UserRole.User],
+      }),
     ];
   }
 
-  async findOne(username: string): Promise<any> {
+  async findOne(username: string): Promise<UsersEntity> {
     return this.users.find(user => user.username === username);
   }
 }
