@@ -1,17 +1,22 @@
-import { User, UserRole } from './interfaces/user.interface';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { UserInterface, UserRoles } from './interfaces';
 
-export class UsersEntity implements User {
-
-  constructor(data) {
-    Object.assign(this, data);
-  }
-
+@Entity({ schema: 'test', name: 'user' })
+export class UsersEntity extends BaseEntity implements UserInterface {
+  @PrimaryGeneratedColumn()
   public id: number;
 
-  public username: string;
+  @Column({ type: 'varchar' })
+  public email: string;
 
+  @Column({ type: 'varchar', select: false })
   public password: string;
 
-  public roles: UserRole[];
+  @Column({
+    type: 'enum',
+    enum: UserRoles,
+    array: true,
+  })
+  public roles: UserRoles[];
 
 }
