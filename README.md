@@ -1,52 +1,21 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# Nest Auth
 
-[travis-image]: https://api.travis-ci.org/nestjs/nest.svg?branch=master
-[travis-url]: https://travis-ci.org/nestjs/nest
-[linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
-[linux-url]: https://travis-ci.org/nestjs/nest
-  
-  <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://img.shields.io/travis/nestjs/nest/master.svg?label=linux" alt="Linux" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#5" alt="Coverage" /></a>
-<a href="https://gitter.im/nestjs/nestjs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge"><img src="https://badges.gitter.im/nestjs/nestjs.svg" alt="Gitter" /></a>
-<a href="https://opencollective.com/nest#backer"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec"><img src="https://img.shields.io/badge/Donate-PayPal-dc3d53.svg"/></a>
-  <a href="https://twitter.com/nestframework"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Intro
 
-## Description
+I used to code js for pretty long time, and was quite tired of doing same stuff over and over again. At some point I even thought server side js have faced some stagnation. An then someone, some where mentioned NestJS, one month later i tried it and felt in love. Unfortunately it looks like the documentation is not as great as framework itself, so I decided to write this article to contribute my 2 cents to popularization on this awesome framework
 
-Source code for the article [Authentication and Sessions for MVC Apps with NestJS](https://dev.to/nestjs/authentication-and-sessions-for-mvc-apps-with-nestjs-55a4)
+## Problem
 
-## Installation
+Me and as appeared a lot of other users want to have an application which includes such features
+ - Authorization with login/password
+ - Authorization with social networks
+ - Private/Public areas (controllers/routes)
+ - Role based ACL
+ - Persisted sessions
+ 
+But unfortunately there were no good docs covering this part of framework. I mean there are, 2 pages in official documentation [Guards](https://docs.nestjs.com/guards), [Authentication](https://docs.nestjs.com/techniques/authentication), some outdated articles [1](https://medium.com/@tomanagle/strongly-typed-models-with-mongoose-and-typescript-7bc2f7197722), [2](https://medium.com/@nielsmeima/auth-in-nest-js-and-angular-463525b6e071), some random code on GH [TeamHive](https://github.com/TeamHive/nestjs-seed),  [artonio](https://github.com/artonio/nestjs-session-tutorial-finished), numerous closed issues [269](https://github.com/nestjs/nest/issues/269) [964](https://github.com/nestjs/nest/issues/964) -> [99](https://github.com/nestjs/docs.nestjs.com/issues/99) and one [good article](https://dev.to/nestjs/authentication-and-sessions-for-mvc-apps-with-nestjs-55a4) from [@johnbiundo](https://github.com/johnbiundo) about local authorization. And all these links does not give you whole picture of how authorizations should be build
 
-```bash
-npm install
-```
+ ## Solution
+ 
+ This example is a fully functional boilerplate with all features mentioned above. It also includes some very basic tests, typeorm, migrations and utils. However I just started coding with Nest so I dont know all best proctices, like for example I saw mentions of injectable configs for strategies or there is no use of `accessToken` and `refreshToken` because they are not really useful in this model. It would be cool if you leave a comment, link to interesting article or a piece of code, or made a RP to help me make this starter better
 
-## Running the app
-
-```bash
-# development
-npm run start
-
-# watch mode
-npm run start:dev
-
-# production mode
-npm run start:prod
-```
-
-## License
-
-[MIT licensed](LICENSE).

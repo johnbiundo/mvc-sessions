@@ -1,35 +1,38 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository, FindConditions } from 'typeorm';
 import { UsersEntity } from './users.entity';
-import { UserRole } from './interfaces/user.interface';
+import { createHash } from 'crypto';
 
 @Injectable()
 export class UsersService {
-  private readonly users: UsersEntity[];
-
-  constructor() {
-    this.users = [
-      new UsersEntity({
-        id: 1,
-        username: 'john',
-        password: 'changeme',
-        roles: [UserRole.Admin],
-      }),
-      new UsersEntity({
-        id: 2,
-        username: 'chris',
-        password: 'secret',
-        roles: [UserRole.User],
-      }),
-      new UsersEntity({
-        id: 3,
-        username: 'maria',
-        password: 'guess',
-        roles: [UserRole.User],
-      }),
-    ];
+  constructor(
+    @InjectRepository(UsersEntity)
+    private readonly userEntityRepository: Repository<UsersEntity>,
+  ) {
   }
 
-  async findOne(username: string): Promise<UsersEntity> {
-    return this.users.find(user => user.username === username);
+  public findOne(where: FindConditions<UsersEntity>): Promise<UsersEntity | undefined> {
+    return this.userEntityRepository.findOne({ where });
+  }
+
+  public findAndCount(): Promise<[UsersEntity[], number]> {
+    return this.userEntityRepository.findAndCount();
+  }
+
+  public async getByCredentials(email: string, password: string): Promise<UsersEntity | undefined> {
+    return this.userEntityRepository.findOne({
+      where: {
+        email,
+        password: this.createPasswordHash(password, email),
+      },
+    });
+  }
+
+  private createPasswordHash(password: string, salt: string): string {
+    return createHash('sha256')
+      .update(password)
+      .update(salt)
+      .digest('hex');
   }
 }
