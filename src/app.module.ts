@@ -7,5 +7,4 @@ import * as ormconfig from './ormconfig';
 @Module({
   imports: [TypeOrmModule.forRoot(ormconfig), AuthModule, UsersModule],
 })
-export class AppModule {
-}
+export class AppModule {}

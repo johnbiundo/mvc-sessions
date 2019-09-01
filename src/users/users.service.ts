@@ -9,10 +9,11 @@ export class UsersService {
   constructor(
     @InjectRepository(UsersEntity)
     private readonly userEntityRepository: Repository<UsersEntity>,
-  ) {
-  }
+  ) {}
 
-  public findOne(where: FindConditions<UsersEntity>): Promise<UsersEntity | undefined> {
+  public findOne(
+    where: FindConditions<UsersEntity>,
+  ): Promise<UsersEntity | undefined> {
     return this.userEntityRepository.findOne({ where });
   }
 
@@ -20,7 +21,10 @@ export class UsersService {
     return this.userEntityRepository.findAndCount();
   }
 
-  public async getByCredentials(email: string, password: string): Promise<UsersEntity | undefined> {
+  public async getByCredentials(
+    email: string,
+    password: string,
+  ): Promise<UsersEntity | undefined> {
     return this.userEntityRepository.findOne({
       where: {
         email,

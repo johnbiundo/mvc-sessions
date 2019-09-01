@@ -14,8 +14,18 @@ describe('AuthService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [TypeOrmModule.forRoot(ormconfig), TypeOrmModule.forFeature([UsersEntity]), UsersModule, PassportModule],
-      providers: [AuthService, GoogleStrategy, LocalStrategy, SessionSerializer],
+      imports: [
+        TypeOrmModule.forRoot(ormconfig),
+        TypeOrmModule.forFeature([UsersEntity]),
+        UsersModule,
+        PassportModule,
+      ],
+      providers: [
+        AuthService,
+        GoogleStrategy,
+        LocalStrategy,
+        SessionSerializer,
+      ],
     }).compile();
 
     service = module.get<AuthService>(AuthService);

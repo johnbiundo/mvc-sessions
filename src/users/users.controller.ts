@@ -54,6 +54,8 @@ export class UsersController {
   @Get('/list')
   @Roles(UserRoles.Admin)
   public findAll(): Promise<{ list: UsersEntity[]; count: number }> {
-    return this.usersService.findAndCount().then(([list, count]) => ({ list, count }));
+    return this.usersService
+      .findAndCount()
+      .then(([list, count]) => ({ list, count }));
   }
 }

@@ -1,0 +1,14 @@
+{
+  "ignore": [],
+  "linters": {
+    "*.ts": [
+      "prettier --write",
+      "tslint --fix",
+      "git add"
+    ],
+    "*.json": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}

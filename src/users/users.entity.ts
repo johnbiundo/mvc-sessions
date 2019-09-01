@@ -18,5 +18,4 @@ export class UsersEntity extends BaseEntity implements UserInterface {
     array: true,
   })
   public roles: UserRoles[];
-
 }

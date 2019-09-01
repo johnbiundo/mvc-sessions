@@ -5,7 +5,6 @@ import { UsersEntity } from '../users/users.entity';
 
 @Controller('auth')
 export class AuthController {
-
   @Public()
   @Get('google')
   @UseGuards(GoogleGuard)
