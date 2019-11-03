@@ -1,11 +1,12 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import {MigrationInterface, QueryRunner, Table} from "typeorm";
+
 
 export class AddUserTable1562222612033 implements MigrationInterface {
-  public tableName = 'test.user';
+  public tableName = "test.user";
 
   public async down(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.dropTable(this.tableName);
-    await queryRunner.query(`DROP TYPE test.user_role_enum;`);
+    await queryRunner.query("DROP TYPE test.user_role_enum;");
   }
 
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -20,21 +21,21 @@ export class AddUserTable1562222612033 implements MigrationInterface {
       name: this.tableName,
       columns: [
         {
-          name: 'id',
-          type: 'serial',
+          name: "id",
+          type: "serial",
           isPrimary: true,
         },
         {
-          name: 'email',
-          type: 'varchar',
+          name: "email",
+          type: "varchar",
         },
         {
-          name: 'password',
-          type: 'varchar',
+          name: "password",
+          type: "varchar",
         },
         {
-          name: 'roles',
-          type: 'test.user_role_enum',
+          name: "roles",
+          type: "test.user_role_enum",
           isArray: true,
         },
       ],

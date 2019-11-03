@@ -1,41 +1,53 @@
-import * as session from 'express-session';
-import * as passport from 'passport';
-import { NestFactory, Reflector } from '@nestjs/core';
-import { NestExpressApplication } from '@nestjs/platform-express';
-import { ValidationPipe } from '@nestjs/common';
-import { AppModule } from './app.module';
-import { AuthenticatedGuard, RolesGuard } from './common/guards';
+import "./env";
+// eslint-disable-next-line import/default
+import session from "express-session";
+// eslint-disable-next-line import/default
+import passport from "passport";
+import connectRedis from "connect-redis";
+import * as redis from "redis";
+import {NestFactory, Reflector} from "@nestjs/core";
+import {NestExpressApplication} from "@nestjs/platform-express";
 
-async function bootstrap() {
+import {AppModule} from "./app.module";
+import {LocalGuard, RolesGuard} from "./common/guards";
+
+
+async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  app.useGlobalPipes(
-    new ValidationPipe({
-      transform: true,
-    }),
-  );
-
   app.use(
+    // @ts-ignore
     session({
-      secret: 'nest cats',
+      cookie: {
+        path: "/",
+        httpOnly: true,
+        secure: false,
+        maxAge: 24 * 60 * 60 * 1000,
+        signed: false,
+      },
+      name: "nest",
       resave: false,
-      saveUninitialized: false,
+      secret: process.env.SESSION_SECRET_KEY,
+      // @ts-ignore
+      store: new (connectRedis(session))({client: redis.createClient(process.env.REDIS_URL)}),
+      saveUninitialized: true,
     }),
   );
 
+  // eslint-disable-next-line import/namespace
   app.use(passport.initialize());
+  // eslint-disable-next-line import/namespace
   app.use(passport.session());
 
   const reflector = app.get(Reflector);
-  app.useGlobalGuards(new AuthenticatedGuard(reflector));
+  void reflector;
+  app.useGlobalGuards(new LocalGuard(reflector));
   app.useGlobalGuards(new RolesGuard(reflector));
 
-  const server = await app.listen(process.env.PORT, () => {
-    // tslint:disable-next-line:no-console
-    console.info(`Express server listening on port ${server.address().port}`);
+  await app.listen(process.env.PORT, process.env.HOST, () => {
+    // eslint-disable-next-line no-console
+    console.info(`Express server is running on http://${process.env.HOST}:${process.env.PORT}/`);
   });
-
-  return server;
 }
 
 bootstrap();
