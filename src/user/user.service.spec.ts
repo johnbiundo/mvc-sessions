@@ -5,7 +5,7 @@ import {UserEntity} from "./user.entity";
 import ormconfig from "../ormconfig";
 
 
-describe("UsersService", () => {
+describe("UserService", () => {
   let service: UserService;
 
   beforeEach(async () => {

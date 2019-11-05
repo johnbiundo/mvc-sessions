@@ -7,7 +7,7 @@ import {UserService} from "./user.service";
 
 @Controller("users")
 export class UserController {
-  constructor(private readonly usersService: UserService) {}
+  constructor(private readonly userService: UserService) {}
 
   @Get("profile")
   getGloballyProtectedProfile(@User() user: UserEntity): UserEntity {
@@ -17,6 +17,6 @@ export class UserController {
   @Get("/list")
   @Roles(UserRole.Admin)
   public findAll(): Promise<{list: UserEntity[]; count: number}> {
-    return this.usersService.findAndCount().then(([list, count]) => ({list, count}));
+    return this.userService.findAndCount().then(([list, count]) => ({list, count}));
   }
 }
