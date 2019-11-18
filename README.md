@@ -1,6 +1,6 @@
 # Nest Authorization
 
-This is a code sample for my article 
+This is a code sample for my [article](https://trejgun.github.io/articles/session-based-authorization-for-nestjs)
 
 
 ## Installation

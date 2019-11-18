@@ -5,16 +5,16 @@ import {Roles, User} from "../common/decorators";
 import {UserRole} from "./interfaces";
 import {UserService} from "./user.service";
 
-@Controller("users")
+@Controller("/users")
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get("profile")
+  @Get("/profile")
   getGloballyProtectedProfile(@User() user: UserEntity): UserEntity {
     return user;
   }
 
-  @Get("/list")
+  @Get("/")
   @Roles(UserRole.Admin)
   public findAll(): Promise<{list: UserEntity[]; count: number}> {
     return this.userService.findAndCount().then(([list, count]) => ({list, count}));

@@ -1,12 +1,17 @@
 import {Request} from "express";
-import {Controller, Get, Post, Req, UseGuards} from "@nestjs/common";
+import {Body, Controller, Get, Post, Req, UseGuards} from "@nestjs/common";
+import {promisify} from "util";
 
 import {Public, User} from "../common/decorators";
-import {GoogleGuard, FacebookGuard, LoginGuard} from "../common/guards";
+import {IUserCreateFields} from "../user/interfaces";
+import {FacebookGuard, GoogleGuard, LoginGuard} from "../common/guards";
 import {UserEntity} from "../user/user.entity";
+import {UserService} from "../user/user.service";
 
-@Controller("auth")
+@Controller("/auth")
 export class AuthController {
+  constructor(private readonly userService: UserService) {}
+
   @Public()
   @Get("/login")
   public main(@User() user: UserEntity): string {
@@ -45,21 +50,30 @@ export class AuthController {
   }
 
   @Public()
-  @Get("google")
+  @Get("/signup")
+  public async signup(@Body() data: IUserCreateFields, @Req() req: Request): Promise<UserEntity> {
+    const user = await this.userService.create(data);
+    // @ts-ignore
+    await promisify(req.logIn.bind(req))(user);
+    return user;
+  }
+
+  @Public()
+  @Get("/google")
   @UseGuards(GoogleGuard)
   googleLogin(): void {
     // initiates the Google OAuth2 login flow
   }
 
   @Public()
-  @Get("google/callback")
+  @Get("/google/callback")
   @UseGuards(GoogleGuard)
   googleLoginCallback(@User() user: UserEntity): string {
     return `
       <html>
       	<script>
 					function handleLoad() {
-					  alert(${JSON.stringify(user)})
+					  alert(${JSON.stringify(user)});
 						window.close();
 					}
 				</script>
@@ -69,21 +83,21 @@ export class AuthController {
   }
 
   @Public()
-  @Get("facebook")
+  @Get("/facebook")
   @UseGuards(FacebookGuard)
   facebookLogin(): void {
     // initiates the Google OAuth2 login flow
   }
 
   @Public()
-  @Get("facebook/callback")
+  @Get("/facebook/callback")
   @UseGuards(FacebookGuard)
   facebookLoginCallback(@User() user: UserEntity): string {
     return `
       <html>
       	<script>
 					function handleLoad() {
-					  alert(${JSON.stringify(user)})
+					  alert(${JSON.stringify(user)});
 						window.close();
 					}
 				</script>

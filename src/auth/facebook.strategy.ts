@@ -1,12 +1,13 @@
 import {Strategy} from "passport-facebook";
 import {PassportStrategy} from "@nestjs/passport";
 import {Injectable, UnauthorizedException} from "@nestjs/common";
-import {AuthService} from "./auth.service";
+
 import {UserEntity} from "../user/user.entity";
+import {UserService} from "../user/user.service";
 
 @Injectable()
 export class FacebookStrategy extends PassportStrategy(Strategy, "facebook") {
-  constructor(private readonly authService: AuthService) {
+  constructor(private readonly userService: UserService) {
     super({
       clientID: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
@@ -16,7 +17,7 @@ export class FacebookStrategy extends PassportStrategy(Strategy, "facebook") {
   }
 
   public async validate(_accessToken: string, _refreshToken: string, profile: any): Promise<UserEntity> {
-    const user = await this.authService.validateRemote(profile.emails[0].value);
+    const user = await this.userService.findOne({email: profile.emails[0].value});
     if (user) {
       return user;
     }
