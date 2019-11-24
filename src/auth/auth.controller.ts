@@ -61,14 +61,14 @@ export class AuthController {
   @Public()
   @Get("/google")
   @UseGuards(GoogleGuard)
-  googleLogin(): void {
+  public googleLogin(): void {
     // initiates the Google OAuth2 login flow
   }
 
   @Public()
   @Get("/google/callback")
   @UseGuards(GoogleGuard)
-  googleLoginCallback(@User() user: UserEntity): string {
+  public googleLoginCallback(@User() user: UserEntity): string {
     return `
       <html>
       	<script>
@@ -85,14 +85,14 @@ export class AuthController {
   @Public()
   @Get("/facebook")
   @UseGuards(FacebookGuard)
-  facebookLogin(): void {
+  public facebookLogin(): void {
     // initiates the Google OAuth2 login flow
   }
 
   @Public()
   @Get("/facebook/callback")
   @UseGuards(FacebookGuard)
-  facebookLoginCallback(@User() user: UserEntity): string {
+  public facebookLoginCallback(@User() user: UserEntity): string {
     return `
       <html>
       	<script>
@@ -104,5 +104,19 @@ export class AuthController {
         <body onload="handleLoad()" />
       </html>
     `;
+  }
+
+  @Public()
+  @UseGuards(LoginGuard)
+  @Get("onelogin/login")
+  public oneloginLogin(): void {
+    // initiates the OneLogin login flow
+  }
+
+  @Public()
+  @UseGuards(LoginGuard)
+  @Get("onelogin/callback")
+  public oneloginLoginCallback(@User() user: UserEntity): UserEntity {
+    return user;
   }
 }

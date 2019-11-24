@@ -30,6 +30,10 @@ declare global {
       FACEBOOK_CLIENT_ID: string;
       FACEBOOK_CLIENT_SECRET: string;
       FACEBOOK_CALLBACK_URL: string;
+
+      ONELOGIN_SUBDOMAIN: string;
+      ONELOGIN_CLIENT_ID: string;
+      ONELOGIN_CLIENT_SECRET: string;
     }
   }
 }
